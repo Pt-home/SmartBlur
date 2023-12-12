@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart+ Blur Filter</title>
+  <style>
+   body { 
+     background-color: #474747; 
+     user-select: none; 
+     margin: 0; 
+     padding: 0; }
+    body, input, select, label { 
+      font-family: "Open Sans", Sans-Serif; 
+      font-size: 12px; 
+      color: #d5d5d5; 
+      vertical-align: top; 
+      overflow: hidden; 
+    }
+    label { 
+      line-height:21px; 
+      display: block; 
+      margin: 2px 4px 0 0;
+      width:4em;
+    }
+    .form-group, .form-group-param {
+      text-align:center;
+    }
+    .form-group-param label { 
+      display: inline-block; 
+      width: 5em;
+      text-align: right;
+    }
+    input { 
+      background-color: #252525; 
+      border: 1px solid #252525; 
+      border-radius: 3px; 
+      transition: border 0.5s; 
+      padding: 3px; 
+      box-sizing: border-box; 
+      margin: 2px 2px;
+      width: 4em;
+    }
+
+    select { 
+      background-color: #252525; 
+      border: 1px solid #252525; 
+      border-radius: 3px; 
+      transition: border 0.5s; 
+      padding: 3px; 
+      box-sizing: border-box; 
+      margin: 2px 2px;
+      width: 10em;
+    }
+     
+    input:not(.button):hover, select:hover, input:not(.button):focus, select:focus 
+    { border: 1px solid #3482f6; 
+     outline: none !important; 
+    }
+    .button { 
+      background-color: #606060; 
+      margin: 8px 0 0 1.5px; 
+      border-radius: 3px; 
+      border-top-width: 1px; 
+      border-top-color: rgba(255,255,255,0.15); 
+      border-bottom-width: 1px;
+      border-bottom-color: rgba(0,0,0,0.6);
+      border-left: 0px; 
+      border-right: 0px;
+      padding: 8px;
+      font-size: 13px; 
+      width:20em;
+      text-overflow: ellipsis; 
+      cursor: pointer;
+    }
+    .button:hover { 
+      background-color: #6a6a6a;
+    }
+    .buttonPreset {
+      width:11em;
+    }
+    .page {
+      padding: 6px;
+      margin: 0px auto;
+    }
+    .page > div {
+      margin-bottom: 6px;
+    }
+    h3 {
+      text-align:center;
+      line-height: 0;
+    }
+    .distributionValue {
+      width: 24em;
+    }
+    .progress {
+      text-align: center;
+    }
+       
+  </style>
+ 
+</head>
+<body>
+    <div id="page" class="page">
+    <h3>Smart+ Blur Filter</h3>      
+      
+    <form id="smartBlurFilter">
+
+      <div class="form-group-param">
+        <br>
+        <label for="typeValue">Blur type:</label>
+        <select name="typeValue" id="typeValue" onchange="interfaceSB();">
+          <option value="surface">Surface Blur</option> 
+          <option value="box">Box Blur</option>
+          <option value="gaussian">Gaussian Blur</option> 
+          <option value="motion">Motion Blur</option> 
+          <option value="spin">Radial Blur (Spin)</option>
+          <option value="zoom">Radial Blur (Zoom)</option>             
+      </select>
+      </div>
+      
+      <script>
+      function interfaceSB(){
+          var blurType = document.getElementById("typeValue").value;
+          
+          if (blurType == "surface" ){
+            document.getElementById("radiusLabel").innerHTML   = "Radius:";
+            document.getElementById("radiusValue").value       = "5"; 
+            document.getElementById("radiusValue").min         = "1";
+            document.getElementById("radiusValue").max         = "199";
+            document.getElementById("radiusValue").step        = "1";
+
+            document.getElementById("thresholdLabel").style.display   = "inline-block";
+            document.getElementById("thresholdValue").style.display   = "inline-block"; 
+            document.getElementById("angleLabel").style.display   = "none";
+            document.getElementById("angleValue").style.display   = "none";
+
+            document.getElementById("centers").style.display   = "none";
+                
+          } else if (blurType == "box" ){
+            document.getElementById("radiusLabel").innerHTML   = "Radius:";  
+            document.getElementById("radiusValue").value       = "5";
+            document.getElementById("radiusValue").min         = "1";
+            document.getElementById("radiusValue").max         = "200";
+            document.getElementById("radiusValue").step        = "1";
+
+            document.getElementById("thresholdLabel").style.display   = "none";
+            document.getElementById("thresholdValue").style.display   = "none";
+            document.getElementById("angleLabel").style.display   = "none";
+            document.getElementById("angleValue").style.display   = "none";
+
+            document.getElementById("centers").style.display   = "none";
+            
+          } else if (blurType ==  "gaussian"){
+            document.getElementById("radiusLabel").innerHTML   = "Radius:"; 
+            document.getElementById("radiusValue").value       = "5"; 
+            document.getElementById("radiusValue").min         = "0.1";
+            document.getElementById("radiusValue").max         = "400.0";
+            document.getElementById("radiusValue").step        = "0.1";
+            
+            document.getElementById("thresholdLabel").style.display   = "none";
+            document.getElementById("thresholdValue").style.display   = "none";
+            document.getElementById("angleLabel").style.display   = "none";
+            document.getElementById("angleValue").style.display   = "none";
+
+            document.getElementById("centers").style.display   = "none";
+            
+          } else if (blurType ==  "motion"){
+            document.getElementById("radiusLabel").innerHTML   = "Distance:"; 
+            document.getElementById("radiusValue").value       = "5";
+            document.getElementById("radiusValue").min         = "1";
+            document.getElementById("radiusValue").max         = "100";
+            document.getElementById("radiusValue").step        = "1";
+
+            document.getElementById("thresholdLabel").style.display   = "none";
+            document.getElementById("thresholdValue").style.display   = "none";
+            document.getElementById("angleLabel").style.display   = "inline-block";
+            document.getElementById("angleValue").style.display   = "inline-block";
+
+            document.getElementById("centers").style.display   = "none";
+                        
+          } else {
+            document.getElementById("radiusLabel").innerHTML   = "Amount:"; 
+            document.getElementById("radiusValue").value       = "5";
+            document.getElementById("radiusValue").min         = "1";
+            document.getElementById("radiusValue").max         = "100";
+            document.getElementById("radiusValue").step        = "1";
+
+            document.getElementById("thresholdLabel").style.display   = "none";
+            document.getElementById("thresholdValue").style.display   = "none";
+            document.getElementById("angleLabel").style.display   = "none";
+            document.getElementById("angleValue").style.display   = "none";
+
+            document.getElementById("centers").style.display   = "block";
+            
+          }
+        }
+      </script> 
+      
+      <div class="form-group-param"> 
+        <br>
+        <label for="radiusValue" id="radiusLabel">Radius:</label>
+        <input type="number" id="radiusValue" name="radiusValue" value="5" min="1" max="199" step="1"  required>
+        <label for="thresholdValue" id="thresholdLabel">Threshold:</label>
+        <input type="number" id="thresholdValue" name="thresholdValue" value="15" min="1" max="255" step="1" required>
+        <label for="angleValue" id="angleLabel" style="display: none;">Angle:</label>
+        <input type="number" id="angleValue" name="angleValue" value="45" min="0" max="359" step="1" required style="display: none;">
+      </div>  
+
+      <div class="form-group-param" id="centers" style="display: none;"> 
+        <br>
+        <label for="xValue">Position X:</label>
+        <input type="number" id="xValue" name="xValue" value="50" min="1" max="100" step="1" required>
+        <label for="yValue">Position Y:</label>
+        <input type="number" id="yValue" name="yValue" value="50" min="1" max="100" step="1" required>
+        
+      </div>
+
+      <div class="form-group-param"> 
+        <br>
+        <label for="fuzzinessValue">Fuzziness:</label>
+        <input type="number" id="fuzzinessValue" name="fuzzinessValue" value="100" min="1" max="200" step="1" required>
+        <label for="sizeValue">Smooth:</label>
+        <input type="number" id="sizeValue" name="sizeValue" value="5" min="0" max="100" step="1"  required>
+        
+      </div>
+     
+    </form>
+      
+     <div class="form-group">
+       <br>
+       <input type="button" value="Apply Filter (New Layer)" id="applySL" onclick="applySmartBlur();" class="button"/>
+     </div>
+      
+    <div class="form-group">
+       <p id="indi"    style="visibility: hidden;">Runtime (ms): <span id="runtime">0</span> </p> 
+       <p id="working" style="visibility: hidden;">Working...</p> 
+     </div>
+
+    <div class="form-group-param">
+        <p><br><a href="index.html" style="color:white;">Go to WASM version</a></p>
+     </div>
+    
+  </div>
+
+  <script>
+  
+  function applySmartBlur(){
+    
+    var indi = document.getElementById("indi");
+    var working = document.getElementById("working");
+    var runTime = document.getElementById("runtime");
+
+    working.style.visibility = "visible";
+    indi.style.visibility = "hidden";
+
+    //Read parameters
+    var form = document.getElementById("smartBlurFilter");
+      
+    var radius = form.elements.radiusValue.value; 
+    var threshold = form.elements.thresholdValue.value;
+    
+    var type = form.elements.typeValue.value;
+
+    if (type == "spin") var method = "Spn ";
+    if (type == "zoom") var method = "Zm  ";
+
+    var xpos = Number(form.elements.xValue.value)/100; 
+    var ypos = Number(form.elements.yValue.value)/100;
+
+    var angle = form.elements.angleValue.value;
+    
+    var fuzziness = form.elements.fuzzinessValue.value; 
+    var sizeSmooth = form.elements.sizeValue.value; 
+    
+    var scriptString = `
+      var activeLayer = app.activeDocument.activeLayer;
+      var duplicateLayer = activeLayer.duplicate();
+      duplicateLayer.name = "Orig";
+      duplicateLayer.rasterize(RasterizeType.ENTIRELAYER);
+      var edgesCopyLayer = duplicateLayer.duplicate();
+      edgesCopyLayer.name = "Edges";
+      var blurCopyLayer = duplicateLayer.duplicate();
+      blurCopyLayer.name = "Blur";     
+      var origLayer = app.activeDocument.layers.getByName("Orig");
+      var blurLayer = app.activeDocument.layers.getByName("Blur");
+      var edgesLayer = app.activeDocument.layers.getByName("Edges");
+      
+      app.activeDocument.activeLayer = blurLayer;
+    `;
+
+    if        (type == "surface"){
+        scriptString += `
+        var idsurfaceBlur = stringIDToTypeID( "surfaceBlur" );
+            var descSurfaceBlur = new ActionDescriptor();
+            var idRds = charIDToTypeID( "Rds " );
+            var idPxl = charIDToTypeID( "#Pxl" );
+            descSurfaceBlur.putUnitDouble( idRds, idPxl, ${radius} );
+            var idThsh = charIDToTypeID( "Thsh" );
+            descSurfaceBlur.putInteger( idThsh, ${threshold} );
+        executeAction( idsurfaceBlur, descSurfaceBlur, DialogModes.NO );
+        `;   
+    } else if (type == "box"){
+        scriptString += `
+        var idboxblur = stringIDToTypeID( "boxblur" );
+            var descBoxBlur = new ActionDescriptor();
+            var idRds = charIDToTypeID( "Rds " );
+            var idPxl = charIDToTypeID( "#Pxl" );
+            descBoxBlur.putUnitDouble( idRds, idPxl, ${radius} );
+        executeAction( idboxblur, descBoxBlur, DialogModes.NO );
+        `;  
+    } else if (type == "gaussian"){
+        scriptString += `app.activeDocument.activeLayer.applyGaussianBlur(${radius});`;  
+    } else if (type == "motion"){
+        scriptString += `
+        var idMtnB = charIDToTypeID( "MtnB" );
+            var descMtnB = new ActionDescriptor();
+            var idAngl = charIDToTypeID( "Angl" );
+            descMtnB.putInteger( idAngl, ${angle} );
+            var idDstn = charIDToTypeID( "Dstn" );
+            var idPxl = charIDToTypeID( "#Pxl" );
+            descMtnB.putUnitDouble( idDstn, idPxl, ${radius} );
+        executeAction( idMtnB, descMtnB, DialogModes.NO );
+        `;  
+    }else if (type == "spin" || type == "zoom"){
+        scriptString += `
+        var idRdlB = charIDToTypeID( "RdlB" );
+            var descRadialBlur = new ActionDescriptor();
+            var idAmnt = charIDToTypeID( "Amnt" );
+            descRadialBlur.putInteger( idAmnt, ${radius} );
+            var idBlrM = charIDToTypeID( "BlrM" );
+            var idBlrM = charIDToTypeID( "BlrM" );
+            var idSpn = charIDToTypeID( "${method}" );
+            descRadialBlur.putEnumerated( idBlrM, idBlrM, idSpn );
+            var idBlrQ = charIDToTypeID( "BlrQ" );
+            var idBlrQ = charIDToTypeID( "BlrQ" );
+            var idBst = charIDToTypeID( "Bst " );
+            descRadialBlur.putEnumerated( idBlrQ, idBlrQ, idBst );
+            var idCntr = charIDToTypeID( "Cntr" );
+                var descCntr = new ActionDescriptor();
+                var idHrzn = charIDToTypeID( "Hrzn" );
+                descCntr.putDouble( idHrzn, ${xpos} );
+                var idVrtc = charIDToTypeID( "Vrtc" );
+                descCntr.putDouble( idVrtc, ${ypos} );
+            var idPnt = charIDToTypeID( "Pnt " );
+            descRadialBlur.putObject( idCntr, idPnt, descCntr );
+        executeAction( idRdlB, descRadialBlur, DialogModes.NO );
+        `;
+    } 
+
+    scriptString += `
+    app.activeDocument.activeLayer = edgesLayer;
+
+    var idFndE = charIDToTypeID( "FndE" );
+    executeAction( idFndE, undefined, DialogModes.NO );
+
+    var idDstt = charIDToTypeID( "Dstt" );
+    executeAction( idDstt, undefined, DialogModes.NO );
+
+    var idClrR = charIDToTypeID( "colorRange" );
+        var descClrR = new ActionDescriptor();
+        var idFzns = charIDToTypeID( "Fzns" );
+        descClrR.putInteger( idFzns, ${fuzziness} );
+        var idMnm = charIDToTypeID( "Mnm " );
+            var descMnm = new ActionDescriptor();
+            var idLmnc = charIDToTypeID( "Lmnc" );
+            descMnm.putDouble( idLmnc, 100.000000 );
+            var idA = charIDToTypeID( "A   " );
+            descMnm.putDouble( idA, 0.000000 );
+            var idB = charIDToTypeID( "B   " );
+            descMnm.putDouble( idB, 0.000000 );
+        var idLbCl = charIDToTypeID( "LbCl" );
+        descClrR.putObject( idMnm, idLbCl, descMnm );
+        var idMxm = charIDToTypeID( "Mxm " );
+            var descMxm = new ActionDescriptor();
+            var idLmnc = charIDToTypeID( "Lmnc" );
+            descMxm.putDouble( idLmnc, 100.000000 );
+            var idA = charIDToTypeID( "A   " );
+            descMxm.putDouble( idA, 0.000000 );
+            var idB = charIDToTypeID( "B   " );
+            descMxm.putDouble( idB, 0.000000 );
+        var idLbCl = charIDToTypeID( "LbCl" );
+        descClrR.putObject( idMxm, idLbCl, descMxm );
+        var idcolorModel = stringIDToTypeID( "colorModel" );
+        descClrR.putInteger( idcolorModel, 0 );
+    executeAction( idClrR, descClrR, DialogModes.NO );
+
+    app.activeDocument.activeLayer.remove();
+
+    app.activeDocument.activeLayer = blurLayer;
+
+    app.activeDocument.selection.invert();
+
+    app.activeDocument.selection.feather(${sizeSmooth});
+    
+    app.activeDocument.selection.clear();
+    
+    app.activeDocument.selection.deselect();
+
+    app.activeDocument.activeLayer.merge();
+
+    app.activeDocument.activeLayer.name = "Smart_Blur_Results";
+    `;  
+    
+    //console.log(scriptString);
+
+    window.addEventListener("message", onMessage); 
+    
+    function onMessage(e) {
+        if (e.data == "done") {
+          var endTime = new Date();
+          var duration = endTime - startTime;
+        
+          runTime.innerHTML = duration;
+          working.style.visibility = "hidden";
+          indi.style.visibility = "visible";            
+        } 
+    }
+
+    var startTime = new Date();
+    window.parent.postMessage(scriptString, "*");
+           
+  }
+  </script>  
+</body>
+</html>
